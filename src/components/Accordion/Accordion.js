@@ -8,7 +8,7 @@ const { prefix } = settings;
 const Accordion = ({ children, className, ...other }) => {
   const classNames = classnames(`${prefix}--accordion`, className);
   return (
-    <ul {...other} className={classNames}>
+    <ul {...other} className={classNames} role="presentation">
       {children}
     </ul>
   );

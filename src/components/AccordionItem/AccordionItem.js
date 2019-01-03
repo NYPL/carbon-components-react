@@ -13,6 +13,7 @@ export default class AccordionItem extends Component {
   state = {};
 
   static propTypes = {
+    id: PropTypes.string,
     /**
      * Provide the contents of your AccordionItem
      */
@@ -95,6 +96,7 @@ export default class AccordionItem extends Component {
 
   render() {
     const {
+      id,
       className,
       title,
       renderExpando: Expando,
@@ -117,22 +119,31 @@ export default class AccordionItem extends Component {
         className={classNames}
         onClick={this.handleClick}
         onKeyPress={this.handleKeyPress}
-        role="presentation"
         {...other}>
-        <Expando
-          type="button"
-          aria-expanded={this.state.open}
-          className={`${prefix}--accordion__heading`}
-          onClick={this.handleHeadingClick}>
-          <Icon
-            className={`${prefix}--accordion__arrow`}
-            icon={iconChevronRight}
-            description={iconDescription}
-            role={null} // eslint-disable-line jsx-a11y/aria-role
-          />
-          <div className={`${prefix}--accordion__title`}>{title}</div>
-        </Expando>
-        <div className={`${prefix}--accordion__content`}>{children}</div>
+        <div role="heading">
+          <Expando
+            id={`${id}-heading-button`}
+            type="button"
+            aria-expanded={this.state.open}
+            className={`${prefix}--accordion__heading`}
+            onClick={this.handleHeadingClick}
+          >
+            <Icon
+              className={`${prefix}--accordion__arrow`}
+              icon={iconChevronRight}
+              description={iconDescription}
+              role={null} // eslint-disable-line jsx-a11y/aria-role
+            />
+            <div className={`${prefix}--accordion__title`}>{title}</div>
+          </Expando>
+        </div>
+        <div
+          className={`${prefix}--accordion__content`}
+          role="region"
+          aria-labelledby={`${id}-heading-button`}
+        >
+          {children}
+        </div>
       </li>
     );
   }
